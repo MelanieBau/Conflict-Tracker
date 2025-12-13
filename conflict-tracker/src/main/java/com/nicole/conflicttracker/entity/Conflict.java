@@ -3,6 +3,10 @@ package com.nicole.conflicttracker.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "conflicts")
