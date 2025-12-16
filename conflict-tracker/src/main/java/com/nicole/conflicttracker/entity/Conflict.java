@@ -26,6 +26,13 @@ public class Conflict {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+
+    @OneToMany(mappedBy = "conflict")
+    private List<Faction> factions;
+
+    @OneToMany(mappedBy = "conflict")
+    private List<Event> events;
+
     @ManyToMany
     @JoinTable(
             name = "conflict_countries",
