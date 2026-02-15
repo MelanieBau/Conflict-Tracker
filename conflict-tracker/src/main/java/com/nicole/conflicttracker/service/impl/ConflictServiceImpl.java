@@ -10,56 +10,62 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+
 @Service
 public class ConflictServiceImpl implements ConflictService {
 
     private final ConflictRepository conflictRepository;
-    private final CountryRepository countryRepository;
-    private final ConflictMapper mapper;
+    private final ConflictMapper conflictMapper;
 
     public ConflictServiceImpl(ConflictRepository conflictRepository,
-                               CountryRepository countryRepository,
-                               ConflictMapper mapper) {
+                               ConflictMapper conflictMapper) {
         this.conflictRepository = conflictRepository;
-        this.countryRepository = countryRepository;
-        this.mapper = mapper;
+        this.conflictMapper = conflictMapper;
     }
 
     @Override
     public List<ConflictResponseDto> getAll(Optional<ConflictStatus> status) {
-        List<Conflict> conflicts = status
-                .map(conflictRepository::findByStatus)
-                .orElseGet(conflictRepository::findAll);
+        List<Conflict> conflicts;
 
-        return conflicts.stream().map(mapper::toDto).toList();
+        if (status.isPresent()) {
+            conflicts = conflictRepository.findByStatus(status.get());
+        } else {
+            conflicts = conflictRepository.findAll();
+        }
+
+        return conflicts.stream()
+                .map(conflictMapper::toDto)
+                .toList();
     }
 
     @Override
     public ConflictResponseDto getById(Long id) {
         Conflict conflict = conflictRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conflict not found"));
-        return mapper.toDto(conflict);
+
+        return conflictMapper.toDto(conflict);
     }
 
     @Override
     public ConflictResponseDto create(ConflictRequestDto dto) {
-        Conflict conflict = new Conflict();
-        conflict.setName(dto.name);
-        conflict.setStartDate(dto.startDate);
-        conflict.setStatus(dto.status);
-        conflict.setDescription(dto.description);
+        Conflict conflict = conflictMapper.toEntity(dto);
+        conflict = conflictRepository.save(conflict);
+        return conflictMapper.toDto(conflict);
+    }
 
-        if (dto.countryCodes != null) {
-            Set<Country> countries = new HashSet<>();
-            for (String code : dto.countryCodes) {
-                Country c = countryRepository.findByCode(code)
-                        .orElseThrow(() -> new RuntimeException("Country not found: " + code));
-                countries.add(c);
-            }
-            conflict.setCountries(countries);
-        }
+    @Override
+    public ConflictResponseDto update(Long id, ConflictRequestDto dto) {
+        Conflict conflict = conflictRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Conflict not found"));
 
-        return mapper.toDto(conflictRepository.save(conflict));
+        conflict.setName(dto.getName());
+        conflict.setStartDate(dto.getStartDate());
+        conflict.setStatus(dto.getStatus());
+        conflict.setDescription(dto.getDescription());
+
+        conflict = conflictRepository.save(conflict);
+
+        return conflictMapper.toDto(conflict);
     }
 
     @Override
@@ -67,12 +73,12 @@ public class ConflictServiceImpl implements ConflictService {
         conflictRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<ConflictResponseDto> getByCountryCode(String code) {
-        return conflictRepository.findByCountryCode(code)
-                .stream()
-                .map(mapper::toDto)
+        List<Conflict> conflicts = conflictRepository.findByCountries_Code(code);
+
+        return conflicts.stream()
+                .map(conflictMapper::toDto)
                 .toList();
     }
 }

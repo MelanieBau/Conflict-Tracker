@@ -11,6 +11,7 @@ import java.util.List;
 public interface ConflictRepository extends JpaRepository<Conflict, Long> {
 
     List<Conflict> findByStatus(ConflictStatus status);
+    List<Conflict> findByCountries_Code(String code);
 
     @Query("select distinct c from Conflict c join c.countries co where co.code = :code")
     List<Conflict> findByCountryCode(@Param("code") String code);

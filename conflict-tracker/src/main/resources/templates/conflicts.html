@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Conflicts</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 24px; }
+        h1 { margin-bottom: 16px; }
+        table { border-collapse: collapse; width: 100%; max-width: 1100px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+        th { background: #f5f5f5; }
+        tr:nth-child(even) { background: #fafafa; }
+        .muted { color: #666; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+<h1>Conflicts</h1>
+<p class="muted">List of registered conflicts</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Start Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="conflict : ${conflicts}">
+        <td th:text="${conflict.name}">Name</td>
+        <td th:text="${#strings.abbreviate(conflict.description, 90)}">Description</td>
+        <td th:text="${conflict.status}">Status</td>
+        <td th:text="${#temporals.format(conflict.startDate, 'dd/MM/yyyy')}">Start</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

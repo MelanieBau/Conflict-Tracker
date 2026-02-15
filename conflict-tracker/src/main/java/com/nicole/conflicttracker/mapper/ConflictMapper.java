@@ -22,4 +22,13 @@ public class ConflictMapper {
                 .collect(Collectors.toSet());
         return dto;
     }
+
+    public Conflict toEntity(ConflictRequestDto dto) {
+        Conflict conflict = new Conflict();
+        conflict.setName(dto.getName());
+        conflict.setStartDate(dto.getStartDate());
+        conflict.setStatus(dto.getStatus());
+        conflict.setDescription(dto.getDescription());
+        return conflict;
+    }
 }

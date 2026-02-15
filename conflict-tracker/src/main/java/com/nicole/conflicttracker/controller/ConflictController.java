@@ -36,4 +36,9 @@ public class ConflictController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+    @PutMapping("/{id}")
+    public ConflictResponseDto update(@PathVariable Long id, @RequestBody ConflictRequestDto dto) {
+        return service.update(id, dto);
+    }
 }
