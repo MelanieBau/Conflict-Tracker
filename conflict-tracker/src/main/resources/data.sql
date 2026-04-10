@@ -7,14 +7,14 @@ INSERT INTO COUNTRIES (ID, CODE, NAME) VALUES (5, 'ARM', 'Armenia');
 INSERT INTO COUNTRIES (ID, CODE, NAME) VALUES (6, 'AZE', 'Azerbaijan');
 
 
-INSERT INTO CONFLICTS (ID, NAME, START_DATE, STATUS, DESCRIPTION)
-VALUES (1, 'Russo-Ukrainian War', '2014-02-20', 'ACTIVE', 'Ongoing conflict between Russia and Ukraine.');
+INSERT INTO CONFLICTS (NAME, START_DATE, STATUS, DESCRIPTION)
+VALUES ('Russo-Ukrainian War', '2014-02-20', 'ACTIVE', 'Ongoing conflict between Russia and Ukraine.');
 
-INSERT INTO CONFLICTS (ID, NAME, START_DATE, STATUS, DESCRIPTION)
-VALUES (2, 'Syrian Civil War', '2011-03-15', 'ACTIVE', 'Multi-sided civil war in Syria involving several international actors.');
+INSERT INTO CONFLICTS (NAME, START_DATE, STATUS, DESCRIPTION)
+VALUES ('Syrian Civil War', '2011-03-15', 'ACTIVE', 'Multi-sided civil war in Syria involving several international actors.');
 
-INSERT INTO CONFLICTS (ID, NAME, START_DATE, STATUS, DESCRIPTION)
-VALUES (3, 'Nagorno-Karabakh Conflict', '1988-02-20', 'FROZEN', 'Territorial conflict between Armenia and Azerbaijan.');
+INSERT INTO CONFLICTS (NAME, START_DATE, STATUS, DESCRIPTION)
+VALUES ('Nagorno-Karabakh Conflict', '1988-02-20', 'FROZEN', 'Territorial conflict between Armenia and Azerbaijan.');
 
 
 
