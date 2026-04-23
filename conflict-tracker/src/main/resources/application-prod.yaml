@@ -8,8 +8,20 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization: true
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  server:
+    port: ${PORT:8080}
 
   sql:
     init:
       mode: never
       encoding: UTF-8
+
+  h2:
+    console:
+      enabled: false
