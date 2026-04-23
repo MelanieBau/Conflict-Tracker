@@ -1,10 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/conflicttracker
-    username: postgres
-    password: postgres
+    url: ${DATABASE_CONFLICT}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
+
+  sql:
+    init:
+      mode: never
+      encoding: UTF-8
